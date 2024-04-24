@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Create User
+    {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            padding: 20px; /* Add some padding for better spacing */
+        }
+
+        form {
+            max-width: 400px; /* Limit the width of the form */
+            margin: auto; /* Center the form horizontally */
+            background-color: #fff; /* White background for the form */
+            padding: 20px; /* Add some padding inside the form */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Drop shadow effect */
+        }
+
+        button[type="submit"] {
+            background-color: #ff1493; /* Deep pink button color */
+            color: #ffffff; /* White text color */
+            border: none; /* Remove button border */
+            padding: 10px 20px; /* Add some padding for better appearance */
+            cursor: pointer; /* Add cursor pointer on hover */
+            border-radius: 4px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #ff0066; /* Darker pink on hover */
+        }
+
+        form > div {
+            margin-bottom: 12px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Create User</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password) }}
+    {{ form_row(form.givenName) }}
+
+    <button type="submit">Create</button>
+    {{ form_end(form) }}
+{% endblock %}

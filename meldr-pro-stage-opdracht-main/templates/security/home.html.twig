@@ -1,0 +1,55 @@
+{# templates/security/home.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% include 'navbar.html.twig' %}
+
+
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Stijl voor de map-container */
+        #map {
+            height: 400px; /* Geef de map-container een hoogte van 400px */
+            width: 100%; /* Maak de map-container 100% breed */
+        }
+    </style>
+    <link rel="stylesheet" href="symfony_6/meldr-pro-stage-opdracht">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+{% endblock %}
+
+{% block body %}
+    <h1>Home page</h1>
+
+    <div id="map"></div> <!-- Plaats de map-container hierboven -->
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var map = L.map('map').setView([51.9225, 4.47917], 13); // Rotterdam coördinaten
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Loop through meldingen and add markers for each one
+            {% for melding in meldingen %}
+            var marker = L.marker([{{ melding.latitude }}, {{ melding.longitude }}]).addTo(map);
+            marker.bindPopup("<a href='{{ path('melding_details', {'id': melding.melding_id}) }}'>Melding ID: {{ melding.melding_id }}</a><br>Latitude: {{ melding.latitude }}<br>Longitude: {{ melding.longitude }}").openPopup();
+            {% endfor %}
+        });
+    </script>
+{% endblock %}

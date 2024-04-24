@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <style>
+        body {
+            background-color: #ffffff; /* White background */
+            padding: 20px; /* Add padding for better spacing */
+            font-family: Bolder;
+        }
+
+        .container {
+            max-width: 600px; /* Limit the width of the container */
+            margin: auto; /* Center the container horizontally */
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px; /* Add some bottom margin for spacing */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Add bottom margin for form groups */
+        }
+
+        .btn-primary {
+            background-color: #ff1493; /* Deep Pink button color */
+            border-color: #ff1493; /* Deep Pink button border color */
+        }
+
+        .btn-primary:hover {
+            background-color: #c71585; /* Darker Deep Pink on hover */
+            border-color: #c71585; /* Darker Deep Pink border on hover */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4">Melding Toevoegen</h1>
+        <div id="map" class="mb-4"></div>
+
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.afbeelding) }}
+            {{ form_widget(form.afbeelding) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.categorie) }}
+            {{ form_widget(form.categorie) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.inhoud) }}
+            {{ form_widget(form.inhoud) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.latitude, 'Latitude') }}
+            {{ form_widget(form.latitude, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.longitude, 'Longitude') }}
+            {{ form_widget(form.longitude, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Versturen</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var map = L.map('map').setView([51.9225, 4.47917], 13); // Rotterdam coordinates
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var marker;
+
+            map.on('click', function(e) {
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+                marker = L.marker(e.latlng).addTo(map);
+                marker.bindPopup("Latitude: " + e.latlng.lat.toFixed(6) + "<br>Longitude: " + e.latlng.lng.toFixed(6)).openPopup();
+                document.getElementById('melding_latitude').value = e.latlng.lat;
+                document.getElementById('melding_longitude').value = e.latlng.lng;
+            });
+        });
+    </script>
+{% endblock %}

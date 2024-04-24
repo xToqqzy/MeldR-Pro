@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Welcome to MeldrPro!
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            padding: 20px; /* Add some padding for better spacing */
+            font-family: Bolder;
+        }
+
+        form {
+            max-width: 400px; /* Limit the width of the form */
+            margin: auto; /* Center the form horizontally */
+            background-color: #fff; /* White background for the form */
+            padding: 20px; /* Add some padding inside the form */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Drop shadow effect */
+        }
+
+        button[type="submit"] {
+            background-color: #ff1493; /* Deep pink button color */
+            color: #ffffff; /* White text color */
+            border: none; /* Remove button border */
+            padding: 10px 20px; /* Add some padding for better appearance */
+            cursor: pointer; /* Add cursor pointer on hover */
+            border-radius: 4px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition */
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #ff0066; /* Darker pink on hover */
+        }
+
+        form > div {
+            margin-bottom: 12px;
+        }
+
+        form label {
+            padding-top: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <h1 class="h3 mb-3 font-weight-normal">Welcome to MeldrPro!</h1>
+        <p class="lead">Please log in to continue.</p>
+    </div>
+
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
+        <label for="inputUsername">Username</label>
+        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+        <label for="inputPassword">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+
+        <button class="btn btn-lg btn-primary" type="submit">
+            Sign in
+        </button>
+    </form>
+{% endblock %}

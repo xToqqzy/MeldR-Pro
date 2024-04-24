@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4">Melding Details</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text"><strong>ID:</strong> {{ melding.melding_id }}</p>
+                <p class="card-text"><strong>Type Melding:</strong> {{ melding.categorie.naam }}</p>
+                <p class="card-text"><strong>Inhoud:</strong> {{ melding.inhoud }}</p>
+                <p class="card-text"><strong>Datum/Tijd:</strong> {{ melding.datum_tijd|date('d-m-Y H:i') }}</p>
+
+                {% if melding.afbeelding_url %}
+                    <h2 class="mt-4">Afbeelding</h2>
+                    <img src="{{ asset('uploads/afbeeldingen/' ~ melding.afbeelding_url) }}" class="img-fluid" alt="Afbeelding bij melding">
+                {% endif %}
+
+                {% if melding.user %}
+                    <h2 class="mt-4">Contactgegevens</h2>
+                    <p class="card-text"><strong>Naam:</strong> {{ melding.user.username }}</p>
+                    {% if melding.user.email %}
+                        <p class="card-text"><strong>E-mail:</strong> {{ melding.user.email }}</p>
+                    {% endif %}
+                    <p class="card-text"><strong>Gegeven naam:</strong> {{ melding.user.givenName }}</p>
+                {% endif %}
+
+                {% if melding.afgehandeld %}
+                    <p class="mt-4"><em>Deze melding is al afgehandeld.</em></p>
+                    {% if melding.afbeelding_url_eindresultaat %}
+                        <h3 class="mt-4">Eindresultaat Foto</h3>
+                        <img src="{{ asset('uploads/afbeeldingen/' ~ melding.afbeelding_url_eindresultaat) }}" class="img-fluid" alt="Afbeelding bij afhandeling">
+                    {% endif %}
+                {% else %}
+                    {{ form_start(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.afbeelding_url_eindresultaat) }}
+                        {{ form_widget(form.afbeelding_url_eindresultaat) }}
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background-color: deepPink; border-color: deepPink;">Afhandelen</button> <!-- Deep pink -->
+                    {{ form_end(form) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

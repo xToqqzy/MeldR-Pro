@@ -1,0 +1,37 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+# config/routes.yaml
+
+user_list:
+    path: /users
+    controller: 'App\Controller\UserController::userList'
+
+user_show:
+    path: /user/{id}
+    controller: 'App\Controller\UserController::userShow'
+
+# config/routes.yaml
+
+user_new:
+    path: /user/new
+    controller: 'App\Controller\UserController::newUser'
+
+
+# config/routes.yaml
+
+meldingen_toevoegen:
+    path: /meldingen/toevoegen
+    controller: 'App\Controller\MeldingController::toevoegen'
+    methods: ['GET', 'POST']
+
+categorie_overzicht:
+    path: /categorie/overzicht
+    controller: 'App\Controller\CategorieController::overzicht'
+    methods: ['GET']
+
+home:
+    path: /home
+    controller: App\Controller\HomeController::index

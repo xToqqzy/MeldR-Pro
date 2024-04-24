@@ -1,0 +1,125 @@
+{% extends 'base.html.twig'%}
+
+{% block title %}
+    {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="mt-4">Meldingen Overzicht</h1>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type Melding</th>
+                    <th>Inhoud</th>
+                    <th>Afbeelding</th>
+                    <th>Datum/Tijd</th>
+                    <th>Gebruiker</th>
+                    <th>Status</th>
+                    <th>Actie</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for melding in meldingen %}
+                    <tr>
+                        <td>{{ melding.melding_id }}</td>
+                        <td>{{ melding.categorie.naam }}</td>
+                        <td>{{ melding.inhoud }}</td>
+                        <td>
+                            {% if melding.afbeelding_url %}
+                                <a href="#" class="image-link">
+                                    <img src="{{ asset('/uploads/afbeeldingen/' ~ melding.afbeelding_url) }}" alt="Afbeelding" style="max-width: 100%;">
+                                </a>
+                            {% else %}
+                                Geen afbeelding beschikbaar
+                            {% endif %}
+                        </td>
+                        <td>{{ melding.datum_tijd|date('d-m-Y H:i') }}</td>
+                        <td>{{ melding.user.username }}</td>
+                        <td style="background-color: {% if melding.afgehandeld %} #28a745 {% else %} #dc3545 {% endif %}">{{ melding.afgehandeld ? 'Done' : 'Not done' }}</td>
+                        <td>
+                            <a href="{{ path('melding_details', {'id': melding.melding_id}) }}" class="btn btn-primary">Details</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="expandedImg">
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Custom button styles */
+        .btn-primary {
+            background-color: #ff1493; /* Deep pink color */
+            border-color: #ff1493; /* Deep pink border color */
+        }
+
+        .btn-primary:hover {
+            background-color: #ff0066; /* Darker pink on hover */
+            border-color: #ff0066; /* Darker pink border on hover */
+        }
+    </style>
+
+    <script> /* Dit is de js voor de Funtcie om te scrollen naar rechts van alles voor die functie is van google*/
+        var modal = document.getElementById("imageModal");
+        var modalImg = document.getElementById("expandedImg");
+        var links = document.getElementsByClassName("image-link");
+
+        for (var i = 0; i < links.length; i++) {
+            links[i].onclick = function () {
+                modal.style.display = "block";
+                modalImg.src = this.children[0].src;
+            };
+        }
+
+        var span = document.getElementsByClassName("close")[0];
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+    </script>
+{% endblock %}

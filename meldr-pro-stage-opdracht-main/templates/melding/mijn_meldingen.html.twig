@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <h1 class="mt-4">Mijn Meldingen</h1>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Melding ID</th>
+          <th scope="col">Type Melding</th>
+          <th scope="col">Inhoud</th>
+          <th scope="col">Datum/Tijd</th>
+          <th scope="col">Afbeelding</th>
+          <th scope="col">Status</th>
+          <th scope="col">Details</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for melding in meldingen %}
+          <tr>
+            <td>{{ melding.melding_id }}</td>
+            <td>{{ melding.categorie.naam }}</td>
+            <td>{{ melding.inhoud }}</td>
+            <td>{{ melding.datumTijd|date('Y-m-d H:i:s') }}</td>
+            <td>
+              {% if melding.afbeelding_url %}
+                <a href="#" class="image-link">
+                  <img src="{{ asset('/uploads/afbeeldingen/' ~ melding.afbeelding_url) }}" alt="Afbeelding" style="max-width: 100%;">
+                </a>
+              {% else %}
+                Geen afbeelding beschikbaar
+              {% endif %}
+            </td>
+            <td style="background-color: {% if melding.afgehandeld %} #28a745 {% else %} #dc3545 {% endif %}">{{ melding.afgehandeld ? 'Done' : 'Not done' }}</td>
+            <td>
+              <a href="{{ path('melding_details', {'id': melding.melding_id}) }}" class="btn btn-primary">Details</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <style>
+    /* Custom button styles */
+
+    .btn-primary {
+      background-color: #ff1493; /* Deep Pink color */
+      border-color: #ff1493; /* Deep Pink border color */
+    }
+
+    .btn-primary:hover {
+      background-color: #c71585; /* Darker Deep Pink on hover */
+      border-color: #c71585; /* Darker Deep Pink border on hover */
+    }
+    body{
+      font-family: Bolder;
+    }
+  </style>
+{% endblock %}

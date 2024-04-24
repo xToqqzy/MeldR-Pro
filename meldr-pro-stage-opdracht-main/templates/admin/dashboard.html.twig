@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Admin Dashboard
+    {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background-color: #ffffff; /* White background */
+            padding: 20px; /* Add some padding for better spacing */
+            font-family: Bolder;
+        }
+
+        table {
+            width: 100%; /* Make the table full width */
+            border-collapse: collapse; /* Collapse table borders */
+        }
+
+        th, td {
+            padding: 10px; /* Add padding to table cells */
+            border-bottom: 1px solid #ddd; /* Add bottom border to table rows */
+        }
+
+        th {
+            background-color: #f2f2f2; /* Light gray background for table headers */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Admin Dashboard</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Given Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.givenName }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

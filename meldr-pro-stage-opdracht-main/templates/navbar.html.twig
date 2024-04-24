@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .navbar {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .nav-link {
+            color: #000000;
+        }
+
+        .nav-link:hover {
+            color: #007bff;
+        }
+
+        .navbar-collapse{
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            padding: 12px;
+            z-index: 1000;
+
+
+        }
+        body{
+            font-family: Bolder;
+        }
+
+
+        /* Respsonive voor kleineren schermen */
+        @media (max-width: 575px) {
+            .navbar-brand img {
+                max-height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+    <a class="navbar-brand" href="{{ path('home') }}">
+        <img src="{{ asset('uploads/afbeeldingen/logo.png') }}" alt="Gemeente Rotterdam logo" height="30">
+
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" onclick="toggleNavbar()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('admin_dashboard') }}">Alle Medewerkers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('melding_toevoegen') }}">Melding Toevoegen</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('mijn_meldingen') }}">Mijn Meldingen</a>
+            </li>
+
+            {% if  app.user.id == 1 %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin_create_user') }}">Nieuwe Medewerker</a>
+                </li>
+
+
+            {% endif %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('meldingen_overzicht') }}">Alle Meldingen</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+<script>
+    // JavaScript function to toggle the responsive behavior of the navbar
+    function toggleNavbar() {
+        var navbarCollapse = document.getElementById("navbarSupportedContent");
+        if (navbarCollapse.classList.contains("show")) {
+            navbarCollapse.classList.remove("show");
+        } else {
+            navbarCollapse.classList.add("show");
+        }
+    }
+</script>
+
+</body>
+</html>

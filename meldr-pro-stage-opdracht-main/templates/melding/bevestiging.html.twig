@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% include 'navbar.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4">Melding Toegevoegd</h1>
+        <div class="alert alert-success">Melding toegevoegd met melding ID: {{ melding.getMeldingID() }}</div>
+        <p class="mt-4">Wat wil je nu doen?</p>
+        <a href="{{ path('melding_toevoegen') }}" class="btn btn-primary mr-2" style="background-color: deepPink; border-color: deepPink;">Nieuwe Melding Toevoegen</a> <!-- Deep pink -->
+        <a href="{{ path('meldingen_overzicht') }}" class="btn btn-secondary" style="background-color: deepPink; border-color: deepPink;">Terug naar Meldingenoverzicht</a> <!-- Deep pink -->
+    </div>
+{% endblock %}

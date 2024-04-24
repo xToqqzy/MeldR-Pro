@@ -1,0 +1,511 @@
+@mixin focus-outline {
+    outline-style: solid !important;
+    outline-width: medium !important;
+    outline-color: $gray-tint11 !important;
+}
+
+html,
+body {
+    margin: 0;
+    font-family: "Bolder", sans-serif;
+    font-size: 1em;
+    color: $gray-tint11;
+
+    @media (min-width: map-get($grid-breakpoints, sm)) {
+        font-size: 1.125em;
+    }
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smoothing: antialiased;
+}
+
+body,
+main,
+header {
+    > .container {
+        display: block;
+        max-width: map-get($container-max-widths, xxl);
+        margin: 0 auto;
+
+        &.container--wide {
+            max-width: map-get($container-max-widths, xxl);
+        }
+        &.container--unlimited {
+            max-width: none;
+        }
+    }
+}
+
+.grid-container {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 32px;
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+        grid-template-columns: 66fr 34fr;
+    }
+}
+
+.fz-medium {
+    font-size: 1em !important;
+}
+.fz-large {
+    font-size: 1.5em !important;
+}
+.fz-xlarge {
+    font-size: 2em !important;
+}
+
+main,
+header {
+    padding: 0 map-get($container-margin, sm) map-get($container-margin, sm);
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+        padding: 0 map-get($container-margin, md) map-get($container-margin, md);
+    }
+}
+
+main {
+}
+
+html {
+    height: 100%;
+}
+body {
+    &.app {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+}
+.app {
+    & main {
+        flex: 1 1 0;
+        height: 100%;
+        padding-bottom: 16px;
+    }
+    .container__list,
+    .page-incidents,
+    turbo-frame,
+    & .container {
+        height: 100%;
+        max-width: none;
+    }
+    & .container {
+        margin: 0;
+        width: 100%;
+    }
+    .page-incidents {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+// HEADINGS
+h1,
+.h1 {
+    font-size: $h1-font-size;
+}
+
+h2,
+.h2 {
+    font-size: $h2-font-size;
+}
+h3,
+.h3 {
+    font-size: $h3-font-size;
+}
+h4,
+.h4 {
+    font-size: $h4-font-size;
+}
+h5,
+.h5 {
+    font-size: $h5-font-size;
+}
+h6,
+.h6 {
+    font-size: $h6-font-size;
+}
+
+p {
+    line-height: $line-height-base;
+    max-width: map-get($container-max-widths, lg);
+}
+
+@mixin has-icon {
+    display: inline-block;
+    margin-left: 25px;
+    position: relative;
+
+    svg {
+        position: absolute;
+        left: -25px;
+        top: 0.25em;
+
+        path {
+            fill: $primary;
+        }
+    }
+}
+
+// TABLES
+table {
+    font-size: 16px;
+    border-collapse: collapse;
+    width: 100%;
+
+    tr:nth-child(even) {
+        background-color: $gray-tint01;
+    }
+    th,
+    td {
+        padding: 10px 5px 10px 0;
+    }
+    thead {
+        th {
+            text-align: left;
+            border-bottom: 2px solid $gray-tint11;
+        }
+    }
+    tbody {
+        td {
+            vertical-align: middle;
+
+            &:first-child {
+                padding: 0;
+            }
+
+            p {
+                padding: 0;
+                margin: 0;
+            }
+        }
+    }
+}
+
+a,
+.link {
+    color: $primary;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    &:focus {
+        @include focus-outline();
+    }
+
+    &.link--location {
+        @include has-icon();
+    }
+
+    &.link--email {
+        @include has-icon();
+    }
+    &.link--phone {
+        @include has-icon();
+    }
+
+    &.link--next {
+        @include has-icon();
+    }
+
+    &.link--back {
+        @include has-icon();
+        margin: 0 0 20px 20px;
+        > svg {
+            left: -20px;
+            path {
+                fill: $gray-tint11;
+            }
+        }
+    }
+    &.no--link {
+        text-decoration: none;
+        color: inherit;
+        outline: none !important;
+        display: inline-block;
+    }
+
+    &.link--file {
+        @include has-icon();
+    }
+
+    &.link--file-text {
+        @include has-icon();
+    }
+    &.link--bin {
+        @include has-icon();
+    }
+
+    &.link--navigate {
+        text-decoration: none;
+        padding: 5px;
+    }
+}
+
+button {
+    &.link--next {
+        @include has-icon();
+    }
+}
+
+p {
+    &.text--person {
+        @include has-icon();
+    }
+
+    &.text--close {
+        @include has-icon();
+        svg {
+            top: 6px;
+        }
+    }
+}
+
+.icon {
+    @include has-icon();
+
+    &--warning {
+        &:before {
+            content: url("../icons/badge-alert.svg");
+            top: -1px;
+        }
+    }
+}
+
+.warning-spoed {
+    svg {
+        vertical-align: sub;
+        width: 24px;
+        height: 24px;
+        path {
+            fill: #db5f06;
+        }
+    }
+
+    .form-check-label & {
+        svg {
+            vertical-align: top;
+            path {
+                fill: #db5f06;
+            }
+        }
+    }
+}
+
+// LISTS
+
+@mixin list-clean {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul {
+    &.list-clean {
+        @include list-clean();
+    }
+
+    &.list--readable {
+        li {
+            margin-bottom: 0.25rem;
+        }
+    }
+
+    &.list--images {
+        @include list-clean();
+        li {
+            margin-bottom: 1em;
+
+            img {
+                max-width: 100%;
+            }
+        }
+    }
+}
+li {
+    &.list-item {
+        border-bottom: 1px solid $gray-tint04;
+    }
+
+    .border-top & {
+        &:first-child {
+            border-top: 1px solid $gray-tint04;
+        }
+    }
+}
+
+dl {
+    div {
+        display: flex;
+
+        dd,
+        dt {
+            margin: 0 0 0.5em;
+        }
+        dt {
+            margin-right: 0.5rem;
+        }
+    }
+}
+.list--blocks-horizontal {
+    @include list-clean();
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 100px;
+    li {
+        margin: 0 0 0.5rem 0.25rem;
+        padding: $input-padding-x;
+        border: 1px solid $gray-tint04;
+        position: relative;
+    }
+}
+
+// SECTIONS
+section {
+    &.section--seperated {
+        padding: 1em 0 0.75em;
+        border-bottom: 1px solid $gray-tint04;
+
+        &__no-border-bottom {
+            border-bottom: 0;
+        }
+    }
+}
+
+h1 + .section--seperated {
+    padding-top: 0;
+}
+
+// STICKY
+
+.has-sticky-footer {
+    padding-bottom: 130px;
+}
+.sticky {
+    position: fixed;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    left: 0;
+    z-index: 2000;
+
+    &--bottom {
+        bottom: 0;
+    }
+}
+
+// HELPER-CLASSES
+.foldout {
+    height: auto;
+    overflow: hidden;
+
+    &.hidden {
+        height: 0;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.show-vertical {
+    max-height: 100%;
+    transition: all 0.25s ease-in;
+
+    &.container__sorting,
+    &.container__search {
+        max-height: 120px;
+        overflow: hidden;
+    }
+}
+
+.hidden-vertical {
+    padding-top: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease-in;
+
+    &.container__sorting,
+    &.container__search {
+        transition: all 0.25s ease-in;
+
+        @media (min-width: map-get($grid-breakpoints, lg)) {
+            max-height: 120px;
+            overflow: hidden;
+        }
+    }
+}
+
+.visually-hidden {
+    display: inline-block;
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    pointer-events: none;
+}
+
+.display-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-margin-top {
+    margin-top: 0 !important;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+
+.margin-vertical {
+    margin-top: 1em !important;
+    margin-bottom: 1em !important;
+}
+
+.invalid-text {
+    color: $invalid-color !important;
+    margin: 0;
+}
+
+.padding-bottom {
+    padding-bottom: 1rem;
+}
+
+.padding-bottom-half {
+    padding-bottom: 0.5rem;
+}
+
+.padding-bottom-2x {
+    padding-bottom: 2rem !important;
+}
+
+.textalign--right {
+    text-align: right;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.width60 {
+    width: 60%;
+}
